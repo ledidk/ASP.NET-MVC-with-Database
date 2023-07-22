@@ -1,0 +1,32 @@
+html {
+  font-size: 14px;
+}
+
+@media (min-width: 768px) {
+  html {
+    font-size: 16px;
+  }
+}
+
+html {
+  position: relative;
+  min-height: 100%;
+}
+
+body {
+    margin-bottom: 60px;
+}
+
+
+.btnCancel 
+{
+    background-color:dimgray;border-radius: 4px;color: white;padding-bottom:8px;padding-top:5px; padding-left:8px;padding-right:8px;text-align: center;text-decoration: none;display: inline-block; cursor: pointer;
+}
+
+.btnCancel:hover {
+        background-color: gray;
+        border-block-color:dimgray;
+    }
+#btnElements{
+    display:inline-block;
+}

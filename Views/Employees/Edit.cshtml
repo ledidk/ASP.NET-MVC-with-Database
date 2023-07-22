@@ -1,0 +1,89 @@
+﻿@model Lab06.Models.DataAccess.Employee
+
+@{
+    ViewData["Title"] = "Edit";
+}
+
+<h1>Edit</h1>
+
+<h4>Employee ID - @ViewBag.EmployeeId</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Edit">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <input type="hidden" asp-for="Id" />
+            <div class="form-group">
+                <label asp-for="Name" class="control-label"></label>
+                <input asp-for="Name" class="form-control" />
+                <span asp-validation-for="Name" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="UserName" class="control-label"></label>
+                <input asp-for="UserName" name="userName" class="form-control" />
+                <span asp-validation-for="UserName" class="text-danger"></span>
+            <span>
+                @{
+                    string errorUserName = "";
+                    if(ViewBag.UserExist != null && ViewBag.UserExist.Equals("true"))
+                    {
+                        errorUserName = @ViewBag.UserErrorMessage;
+                    }
+                }
+                 <p class="text-danger">@errorUserName</p>
+            </span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Password" class="control-label"></label>
+                <input asp-for="Password" class="form-control" readonly/>
+                <span asp-validation-for="Password" class="text-danger"></span>
+            </div>
+             <div  style="position:relative;display: inline-block; ">
+             <p>Roles</p>
+            @{
+                    foreach(var role in ViewBag.Roles )
+                    {
+
+                                     <label class="control-label">
+                                        @role.Role1 <input type="checkbox" name="checkBoxList" value="@role.Role1" @{
+                                        string check ="";
+                                        foreach(var employeeRole in ViewBag.Employee_Roles)
+                                        {
+                                            if(employeeRole.Id == role.Id)
+                                            {
+                                                check = "checked";
+                                            }
+                                        }
+                                        } @check>
+                                    </label>
+                    }
+            }
+                
+            </div>
+             <div>
+                @{
+                    string errorMessage = "";
+                    if(ViewBag.ViewBagEmpty != null && ViewBag.ViewBagEmpty.Equals("true"))
+                    {
+                        errorMessage =@ViewBag.RoleErrorMessage;
+                    }
+
+                }
+                 <p class="text-danger">@errorMessage</p>
+            </div>
+            <br /><br />
+
+            <div class="form-group">
+                <input type="submit" value="Save" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-action="Index">Back to List</a>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

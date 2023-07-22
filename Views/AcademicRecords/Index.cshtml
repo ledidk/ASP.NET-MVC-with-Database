@@ -1,0 +1,45 @@
+﻿@model IEnumerable<Lab06.Models.DataAccess.AcademicRecord>
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h1>Index</h1>
+<p>
+    <a asp-action="Create">Create New</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                <a asp-route-orderby="code" style="text-decoration:none;">@Html.DisplayNameFor(model => model.CourseCodeNavigation)</a>
+            </th>
+            <th>
+               <a asp-route-orderby="code" style="text-decoration:none;"> @Html.DisplayNameFor(model => model.Student)</a>
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Grade)
+            </th>
+            <th style="text-decoration:none;"> @Html.ActionLink("Edit All", "Edit")</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model) {
+                <tr>
+                    <td>
+                         @Html.DisplayFor(modelItem => item.CourseCodeNavigation.Code) - @Html.DisplayFor(modelItem => item.CourseCodeNavigation.Title)
+                    </td>
+                    <td>
+                     @Html.DisplayFor(modelItem => item.Student.Id) -  @Html.DisplayFor(modelItem => item.Student.Name)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Grade)
+                    </td>
+                    <td style="text-decoration:none;">
+                        @* <a asp-action="Edit" asp-route-id="@item.Student.Id">Edit</a> *@
+                        @Html.ActionLink("Edit", "Edit", new { id=item.Student.Id  })
+                    </td>
+                </tr>
+        }
+    </tbody>
+</table>

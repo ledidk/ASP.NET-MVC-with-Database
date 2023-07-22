@@ -1,0 +1,110 @@
+﻿@model Lab06.Models.DataAccess.Employee
+
+@{
+    ViewData["Title"] = "Create";
+}
+
+<h1>Create</h1>
+
+<h4>Employee</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Create">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="Name" class="control-label"></label>
+                <input asp-for="Name" class="form-control" />
+                <span asp-validation-for="Name" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="UserName" class="control-label"></label>
+                <input asp-for="UserName" class="form-control" />
+                <span asp-validation-for="UserName" class="text-danger"></span>
+               <span>
+                @{
+                    string errorUserName = "";
+                    if(ViewBag.UserExist != null && ViewBag.UserExist.Equals("true"))
+                    {
+                        errorUserName = @ViewBag.UserErrorMessage;
+                    }
+                }
+                 <p class="text-danger">@errorUserName</p>
+            </span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Password" class="control-label"></label>
+                <input asp-for="Password" class="form-control" />
+                <span asp-validation-for="Password" class="text-danger"></span>
+            </div>
+
+            <div >
+             <p>Roles</p>
+             <div style="position:relative;display: inline-block; ">
+                 <label  asp-for="@Model.Roles" class="control-label">Department Chair  <input type="checkbox" name="checkBoxList" value="Department Chair"
+                     @{
+                         string check1 ="";
+                         if(ViewBag.CheckedBox!=null){
+                             foreach(var role in ViewBag.CheckedBox)
+                             {
+                                 if(role.Role1.Equals("Department Chair"))
+                                 {
+                                     check1 = "checked";
+                                 }
+                             }
+                         }
+                     }@check1></label> 
+                <label asp-for="@Model.Roles" class="control-label"> Coordinator  <input type="checkbox" name="checkBoxList" value="Coordinator"
+                      @{
+                         string check2 ="";
+                         if(ViewBag.CheckedBox!=null){
+                             foreach(var role in ViewBag.CheckedBox)
+                             {
+                                 if(role.Role1.Equals("Coordinator"))
+                                 {
+                                     check2 = "checked";
+                                 }
+                             }
+                         }
+                     }@check2></label> 
+                 <label asp-for="@Model.Roles" class="control-label">Instructor  <input type="checkbox" name="checkBoxList" value="Instructor"
+                        @{
+                         string check3 ="";
+                         if(ViewBag.CheckedBox!=null){
+                             foreach(var role in ViewBag.CheckedBox)
+                             {
+                                 if(role.Role1.Equals("Instructor"))
+                                 {
+                                     check3 = "checked";
+                                 }
+                             }
+                         }
+                     }@check3></label> 
+                 <span asp-validation-for="@Model.Roles" class="text-danger"></span>
+            </div>
+             @{
+                    string errorMessage = "";
+                    if(ViewBag.ViewBagEmpty != null && ViewBag.ViewBagEmpty.Equals("true"))
+                    {
+                        errorMessage = @ViewBag.RoleErrorMessage;
+                    }
+
+            }
+            <span class="text-danger">@errorMessage</span>   
+            </div> 
+            
+            <br />
+            <div class="form-group">
+                <input type="submit" value="Create" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-action="Index">Back to List</a>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

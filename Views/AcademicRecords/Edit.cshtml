@@ -1,0 +1,79 @@
+﻿@model List<Lab06.Models.DataAccess.AcademicRecord>
+@*@using Microsoft.AspNetCore.Mvc.ViewFeatures;*@
+@{
+    ViewData["Title"] = "Edit";
+}
+
+<h1>Edit</h1>
+
+<h4>Academic Records</h4>
+
+
+        @*<form asp-action="Edit" method="post">*@
+            @using(Html.BeginForm("Edit", "AcademicRecord", FormMethod.Post)){
+             <table class="table">
+                         <thead>
+                            <tr>
+                                <th>
+                                    <a  asp-route-orderby="code" style="text-decoration:none;"><label>Course</label></a>
+                                </th>
+                                <th>
+                                    <a  asp-route-orderby="title" style="text-decoration:none;"><label>Student</label></a> 
+                                </th>
+                                <th>
+                                 Grade
+                                </th>
+                            </tr>
+                        </thead>
+                        <tbody>                           
+                                @for(int i=0; i< Model.Count;i++)
+                                {
+                                    <tr>
+                                        <td>
+                                            @Html.HiddenFor(model => model[i].CourseCodeNavigation.Title)
+                                            @Html.HiddenFor(model => model[i].CourseCodeNavigation.Code)
+                                            @Html.DisplayFor(model => model[i].CourseCodeNavigation.Code) - @Html.DisplayFor(model => model[i].CourseCodeNavigation.Title)
+                                        </td>
+                                        <td>
+                                             @Html.HiddenFor(model => model[i].Student.Id)
+                                             @Html.HiddenFor(model => model[i].Student.Name)
+                                             @Html.DisplayFor(model => model[i].Student.Id) -  @Html.DisplayFor(model => model[i].Student.Name)
+                                        </td>
+                                        <td>
+                                            @Html.EditorFor(model => model[i].Grade)
+                                             @{
+                                                string errorMessage="";
+                                                if(@Model[i].Grade < 0)
+                                                {
+                                                    errorMessage="Must be between 0 and 100 ";
+                                                }
+                                                if(@Model[i].Grade >100)
+                                                {
+                                                    errorMessage="Must be between 0 and 100 ";
+                                                }
+                                             }
+                                             <span class="text-danger">@errorMessage</span>
+                                             <span asp-validation-for="@Model[i].Grade" class="text-danger"></span>
+                                        </td>
+                                    </tr>
+                                    
+                                }
+
+                        </tbody>
+             </table>
+             
+              <div class="row">
+                  <div class="col-md-5" id="btnElements">
+                       <button type="submit" asp-action="Edit" method="post" class="btn btn-primary">Save</button>
+                       <a asp-action="Index" id="btnCancel" style="background-color:dimgray;border-radius: 4px;color: white;
+                        padding-bottom:8px;padding-top:5px; padding-left:8px;padding-right:8px;text-align: center;
+                        text-decoration: none;display: inline-block; cursor: pointer;"
+                       onmouseover="this.style.background-color: gray;">Cancel</a>
+                  </div>
+              </div> 
+             }
+
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}
